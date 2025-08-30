@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name }} - Portfolio</title>
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#hero" class="nav-logo">{{ name }}</a>
+            <div class="nav-menu">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero" id="hero">
+        <div class="container">
+            <p style="color: var(--primary-color); margin-bottom: 0.5rem;">Hi, my name is</p>
+            <h1>{{ name }}.</h1>
+            <h2 class="subtitle">{{ title }}</h2>
+            <p>{{ summary }}</p>
+            <div class="social-links">
+                <a href="{{ social.github }}" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="{{ social.linkedin }}" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:{{ social.email }}" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="about" class="container">
+            <h2><i class="fas fa-user-circle"></i> About Me</h2>
+            <p>{{ about_me }}</p>
+            <blockquote><em>"{{ quote }}"</em></blockquote>
+        </section>
+
+        <section id="skills" class="container">
+            <h2><i class="fas fa-cogs"></i> Skills</h2>
+            <div class="skills-grid">
+                {% for skill in skills %}
+                    <div class="skill-tag">{{ skill }}</div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="projects" class="container">
+            <h2><i class="fas fa-project-diagram"></i> My Projects</h2>
+            <div class="projects-grid">
+                {% for project in projects %}
+                    <div class="project-card">
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.description }}</p>
+                        <p class="project-tech"><strong>Tech Stack:</strong> {{ project.tech_stack | join(', ') }}</p>
+                        <div class="project-links">
+                            {% if project.github_url %}
+                                <a href="{{ project.github_url }}" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                            {% endif %}
+                            {% if project.live_url %}
+                                <a href="{{ project.live_url }}" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="contact" class="container">
+            <div class="contact-content">
+                <h2><i class="fas fa-paper-plane"></i> Get In Touch</h2>
+                <p>
+                    I'm currently looking for new opportunities for an internship.
+                    My inbox is always open, feel free to contact me!
+                </p>
+                <a href="mailto:{{ social.email }}" class="btn">Say Hello</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; {{ current_year }} - Designed & Built by {{ name }}</p>
+        </div>
+    </footer>
+
+</body>
+</html>
